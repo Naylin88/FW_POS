@@ -1,0 +1,62 @@
+[
+    {
+        "imagePath": "./image/p1.png",
+        "item": "Make Up",
+        "price": "1000"
+    },
+    {
+        "imagePath": "./image/p2.png",
+        "item": "Hair ban",
+        "price": "200"
+    },
+    {
+        "imagePath": "./image/p3.png",
+        "item": "Nail clip",
+        "price": "300"
+    }, 
+    {
+        "imagePath": "./image/p4.png",
+        "item": "မိတ်ကပ်",
+        "price": "400"
+    },
+    {
+        "imagePath": "./image/p2.png",
+        "item": "Hair ban",
+        "price": "500"
+    },
+    {
+        "imagePath": "./image/p3.png",
+        "item": "လက်သည်းနီနီနီ",
+        "price": "600"
+    },
+    {
+        "imagePath": "./image/p1.png",
+        "item": "Make Up",
+        "price": "700"
+    },
+    {
+        "imagePath": "./image/p2.png",
+        "item": "Hair ban",
+        "price": "800"
+    },
+    {
+        "imagePath": "./image/p3.png",
+        "item": "Nail clip",
+        "price": "900"
+    },
+    {
+        "imagePath": "./image/p1.png",
+        "item": "Make Up",
+        "price": "100"
+    },
+    {
+        "imagePath": "./image/p2.png",
+        "item": "Hair ban",
+        "price": "100"
+    },
+    {
+        "imagePath": "./image/p4.png",
+        "item": "Nail clip",
+        "price": "120"
+    }
+]

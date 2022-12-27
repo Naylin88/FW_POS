@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fancy World</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-md">
+      <a class="navbar-brand" href="#">Fancy World</a>
+    </div>
+  </nav>
+  <hr>
+  <div class="container">
+    <div class="row g-3">
+	
+	<!--Search-->
+        <div class="form-outline">
+          <input type="search" id="myFilter" onkeyup="myFilter()" class="form-control"
+            placeholder="Search products..." aria-label="Search" />
+        </div>
+        <hr>
+<!--Summary-->		
+	<div class="flex bg-light">
+        <div class="card mb-4">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Summary</h5>
+          </div>
+          <div class="card-body">
+            <ol id="myOl" class="list-group list-group-flush list-group-numbered">
+              <!--
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                <small>Products products </small>
+                <input class="form-control" style = "width: auto; text-align: center;" size ="1" value="1"></input>
+                <small>10000</small>
+                <button type="button" class="btn btn-outline-danger btn-rounded btn-sm float-end"
+                  data-mdb-ripple-color="dark">X</button>
+              </li>
+                -->
+            </ol>
+            <hr>
+            <div>
+              <strong>Total amount</strong>
+              <span id="totalAmt" class="float-end"><strong>0 MMK</strong></span>
+            </div>
+
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btnPay btn btn-primary btn-sm btn-block float-end">
+              Pay
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex bg-light">
+       
+        <div id="myDiv" class="row row-cols-1 row-cols-md-6 g-1">
+          
+          <!--looping items-->
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+fetch('./data/item.json')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        appendData(data);
+      })
+      .catch(function (err) {
+        console.log('error: ' + err);
+      });
+     
+    function appendData(data) {
+      var counter = 0;
+      var mainContainer = document.getElementById("myDiv");
+      for (var i = 0; i < data.length; i++) {
+        mainContainer.innerHTML += '<div id="product'+(++counter)+'" class="card h-30" onclick="myClick(id)"> ' +
+          ' <img id="imgpath" src="' + data[i].imagePath + '" class="card-img-top" alt="...">' +
+          ' <div class="card-body"> ' +
+          ' <p id="p1" class="card-text">' + data[i].item + '</p> ' +
+          ' <p id="p2" class="card-text">' + data[i].price + '</p> ' +
+          '</div>' +
+          '</div>';
+      }
+    }
+
+    function myFilter() {
+      var input, filter, cards, cardContainer, i;
+      input = document.getElementById("myFilter");
+      filter = input.value.toUpperCase();
+      cardContainer = document.getElementById("myDiv");
+      cards = cardContainer.getElementsByClassName("card");
+      console.log(cards);
+      for (i = 0; i < cards.length; i++) {
+        title = cards[i].querySelector("#p1");
+        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+         cards[i].style.display = "";
+          //cards[i].classList.remove("d-none")
+        } else {
+          cards[i].style.display = "none";
+         // cards[i].classList.add("d-none");
+        }
+      }
+    }
+  
+	$('#myOl').on('change','li',function(){
+      $('#price',this).text( ($('#qty', this).val()) * (parseFloat($('#price', this).text())) );
+		myAmount();
+	});
+
+   $('.btnPay').click(function(){
+   window.print();
+   });
+   
+    function myAmount(){ 
+	
+    var sum = 0;
+    $('li #price').each(function() {	
+        sum += parseFloat($(this).text());
+    });
+	console.log("sum >> " + sum);
+	$('#totalAmt').text(sum);
+   
+    }
+			
+	 function myClick(e){
+
+      let item, price, mainContainer, detail;
+      detail = document.getElementById(e);
+      item = detail.childNodes[3].firstElementChild.innerHTML;
+      price = detail.childNodes[3].lastElementChild.innerHTML;
+	
+      $('#myOl').append ('<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"> ' +
+              ' <text> '+ item +' </text>' +
+              ' <input id="qty" type="number" class="form-control" style = "width: auto; text-align: center;" size ="2" value="1"></input> ' +
+              ' <small id="price">'+ price +'</small> ' +
+              ' <button class="btnDelete btn btn-outline-danger" onclick="parentNode.parentNode.removeChild(parentNode); myAmount();">X</button> </li>');
+	
+	setTimeout( function() {
+    //do something special
+	myAmount();
+	}, 500);
+}
+	
+     
+  </script>
